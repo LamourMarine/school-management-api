@@ -50,7 +50,8 @@ public class StudentController {
     public ResponseEntity<?> getStudentGrades(@PathVariable Long id) {
         Optional<Student> student = service.findById(id);
         if(!student.isPresent()) {
-            ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
+
         }
         List<Grade>grades = gradeService.findByStudentId(id);
         return ResponseEntity.ok(grades);
