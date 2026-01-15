@@ -11,7 +11,7 @@ public class Course {
 
     @Column(nullable = false)
     private String title;
-
+ 
     private String teacher;
 
     @Column(nullable = false, unique = true)
