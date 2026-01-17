@@ -1,0 +1,13 @@
+# Database
+spring.datasource.url=jdbc:postgresql://localhost:5433/gestionecole
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+
+# JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+# JWT (use environment variables)
+jwt.secret=${JWT_SECRET}
+jwt.expiration=${JWT_EXPIRATION:86400000}
