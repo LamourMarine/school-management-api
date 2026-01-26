@@ -25,11 +25,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain
-    ) throws ServletException, IOException {
-        // Exclure le health check du filtre JWT
+        HttpServletRequest request,
+        HttpServletResponse response,
+        FilterChain filterChain
+) throws ServletException, IOException {
+    // Exclure seulement le health check du filtre JWT
     String path = request.getRequestURI();
     if (path.equals("/api/health")) {
         filterChain.doFilter(request, response);
