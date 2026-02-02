@@ -138,16 +138,6 @@ Learning project built to:
 - Build a complete REST API
 - Prepare for a Java developer apprenticeship
 
-## Next Steps
-
-- [ ] Data validation (Bean Validation)
-- [ ] Centralized error handling
-- [ ] React frontend
-- [ ] Spring Security (JWT authentication)
-- [ ] Unit tests (JUnit)
-- [ ] Swagger documentation
-- [ ] Deployment
-
 ## Author
 
 **Marine** - Full-Stack Developer in training  
