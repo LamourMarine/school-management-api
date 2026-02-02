@@ -150,7 +150,7 @@ Learning project built to:
 
 ## Author
 
-**Marine Lamour** - Full-Stack Developer  
+**Marine Lamour** - Backend Developer  
 [Portfolio](https://ml-dev.netlify.app)
 
 ## License
