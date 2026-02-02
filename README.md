@@ -138,7 +138,7 @@ POST /api/grades
 
 ## Related Projects
 
-- [Frontend Application](https://github.com/YOUR_USERNAME/school-management-frontend) - React TypeScript client
+- [Frontend Application](https://github.com/LamourMarine/school-management-frontend) - React TypeScript client
 
 ## Project Goals
 
