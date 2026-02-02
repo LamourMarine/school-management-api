@@ -14,11 +14,13 @@ A REST API built with Spring Boot for managing students, courses, and grades.
 ## Features
 
 ### Complete CRUD operations
+
 - ✅ Student management
 - ✅ Course management
 - ✅ Grade management
 
 ### Advanced features
+
 - ✅ Retrieve all grades for a student
 - ✅ Calculate student average
 - ✅ Retrieve all grades for a course
@@ -27,6 +29,7 @@ A REST API built with Spring Boot for managing students, courses, and grades.
 ## Installation
 
 ### Prerequisites
+
 - Java 21
 - Docker & Docker Compose
 - Maven
@@ -54,6 +57,7 @@ The API will be available at `http://localhost:8080`
 ## API Endpoints
 
 ### Students
+
 - `GET /api/students` - List all students
 - `GET /api/students/{id}` - Get a student by ID
 - `POST /api/students` - Create a student
@@ -63,6 +67,7 @@ The API will be available at `http://localhost:8080`
 - `GET /api/students/{id}/average` - Calculate student average
 
 ### Courses
+
 - `GET /api/courses` - List all courses
 - `GET /api/courses/{id}` - Get a course by ID
 - `POST /api/courses` - Create a course
@@ -71,6 +76,7 @@ The API will be available at `http://localhost:8080`
 - `GET /api/courses/{id}/grades` - Get all grades for a course
 
 ### Grades
+
 - `GET /api/grades` - List all grades
 - `GET /api/grades/{id}` - Get a grade by ID
 - `POST /api/grades` - Create a grade
@@ -130,18 +136,22 @@ POST /api/grades
 }
 ```
 
+## Related Projects
+
+- [Frontend Application](https://github.com/YOUR_USERNAME/school-management-frontend) - React TypeScript client
+
 ## Project Goals
 
 Learning project built to:
 - Master Spring Boot architecture (MVC pattern)
 - Understand JPA/Hibernate and entity relationships
 - Build a complete REST API
-- Prepare for a Java developer apprenticeship
+- Practice full-stack development skills
 
 ## Author
 
-**Marine** - Full-Stack Developer in training  
-https://ml-dev.netlify.app/
+**Marine Lamour** - Full-Stack Developer  
+[Portfolio](https://ml-dev.netlify.app)
 
 ## License
 
