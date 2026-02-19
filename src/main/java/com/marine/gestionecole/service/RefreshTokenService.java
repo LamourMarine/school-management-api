@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 // @Service = "C'est un service Spring, il contient de la logique métier"
@@ -86,11 +85,12 @@ public class RefreshTokenService {
     /**
      * Chercher un refresh token par sa valeur
      * @param token La valeur du token
-     * @return Optional contenant le token si trouvé
+     * @return le token si trouvé
      */
-    public Optional<RefreshToken> findByToken(String token) {
-        return refreshTokenRepository.findByToken(token);
-    }
+    public RefreshToken findByToken(String token) {
+    return refreshTokenRepository.findByToken(token)
+        .orElseThrow(() -> new RuntimeException("Refresh token not found"));
+}
 
     /**
      * Révoquer tous les refresh tokens d'un utilisateur (lors du logout)
@@ -100,4 +100,14 @@ public class RefreshTokenService {
     public void revokeByUser(User user) {
         refreshTokenRepository.revokeAllByUser(user);
     }
+
+    /**
+     * Révoquer le dernier refresh token d'un utilisateur (lors du logout)
+     * @param token la valeur du token
+     */
+    @Transactional
+    public void revokeToken(String token) {
+        refreshTokenRepository.revokeByToken(token);
+    }
+    
 }

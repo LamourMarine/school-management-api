@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    // Pas besoin de code ! JpaRepository fournit :
+    // Pas besoin de code , JpaRepository fournit :
     // - findAll()
     // - findById(Long id)
     // - save(Etudiant etudiant)
