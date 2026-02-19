@@ -14,7 +14,7 @@ public class CookieService {
   ) {
     Cookie cookie = new Cookie("refreshToken", refreshToken);
     cookie.setHttpOnly(true);
-    cookie.setSecure(false); // true en production avec HTTPS
+    cookie.setSecure(true); // true en production avec HTTPS
     cookie.setPath("/api/auth");
     cookie.setMaxAge(7 * 24 * 60 * 60); // 7 jours en secondes
     cookie.setAttribute("SameSite", "None"); // Protection CSRF
