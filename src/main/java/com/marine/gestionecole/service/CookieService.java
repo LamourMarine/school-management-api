@@ -18,27 +18,30 @@ public class CookieService {
     cookie.setPath("/api/auth");
     cookie.setMaxAge(7 * 24 * 60 * 60); // 7 jours en secondes
     cookie.setAttribute("SameSite", "None"); // Protection CSRF
+    cookie.setAttribute("Partitioned", "");
     response.addCookie(cookie);
   }
 
   public void deleteRefreshTokenCookie(HttpServletResponse response) {
-      Cookie deleteCookie = new Cookie("refreshToken", null);
-      deleteCookie.setPath("/api/auth");
-      deleteCookie.setHttpOnly(true);
-      deleteCookie.setMaxAge(0); //  Supprime le cookie
-      response.addCookie(deleteCookie);
-
+    Cookie deleteCookie = new Cookie("refreshToken", null);
+    deleteCookie.setPath("/api/auth");
+    deleteCookie.setHttpOnly(true);
+    deleteCookie.setSecure(true);
+    deleteCookie.setMaxAge(0);
+    deleteCookie.setAttribute("SameSite", "None");
+    deleteCookie.setAttribute("Partitioned", "");
+    response.addCookie(deleteCookie);
   }
 
   public String getRefreshTokenFromCookie(HttpServletRequest request) {
     Cookie[] cookies = request.getCookies();
     if (cookies != null) {
-        for (Cookie cookie : cookies) {
-            if ("refreshToken".equals(cookie.getName())) {
-                return cookie.getValue();
-            }
+      for (Cookie cookie : cookies) {
+        if ("refreshToken".equals(cookie.getName())) {
+          return cookie.getValue();
         }
+      }
     }
     return null;
-}
+  }
 }
