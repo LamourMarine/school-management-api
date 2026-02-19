@@ -17,7 +17,7 @@ public class CookieService {
     cookie.setSecure(false); // true en production avec HTTPS
     cookie.setPath("/api/auth");
     cookie.setMaxAge(7 * 24 * 60 * 60); // 7 jours en secondes
-    cookie.setAttribute("SameSite", "Lax"); // Protection CSRF
+    cookie.setAttribute("SameSite", "None"); // Protection CSRF
     response.addCookie(cookie);
   }
 
