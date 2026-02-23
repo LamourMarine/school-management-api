@@ -2,7 +2,7 @@ package com.marine.gestionecole.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "course")
+@Table(name = "courses")
 public class Course {
 
     @Id
