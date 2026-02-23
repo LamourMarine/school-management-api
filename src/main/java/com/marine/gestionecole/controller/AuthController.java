@@ -72,6 +72,7 @@ public class AuthController {
     try {
       // 1. Extraire le refresh token du cookie
       String refreshToken = cookieService.getRefreshTokenFromCookie(request);
+      System.out.println("Refresh token reçu : " + refreshToken);
 
       if (refreshToken == null) {
         return ResponseEntity.badRequest().body("Refresh token not found");
@@ -91,6 +92,8 @@ public class AuthController {
 
       return ResponseEntity.ok(authResponse);
     } catch (Exception e) {
+      System.out.println("Erreur refresh : " + e.getMessage());
+    e.printStackTrace();
       return ResponseEntity.badRequest().body(
         "Invalid or expired refresh token"
       );

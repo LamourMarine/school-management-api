@@ -5,6 +5,9 @@ import com.marine.gestionecole.dto.LoginRequest;
 import com.marine.gestionecole.dto.RegisterRequest;
 import com.marine.gestionecole.entity.RefreshToken;
 import com.marine.gestionecole.entity.User;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -87,6 +90,7 @@ public class AuthenticationService {
     );
   }
 
+  @Transactional
   public AuthResponse refresh(String refreshToken) {
     // Chercher le refresh token en base
     RefreshToken token = refreshTokenService.findByToken(refreshToken);
