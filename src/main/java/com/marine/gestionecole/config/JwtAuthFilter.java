@@ -42,8 +42,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
     // 3. Extraire le token (enlever "Bearer ")
     jwt = authHeader.substring(7);
+    System.out.println("Token reçu : " + jwt);
+
     // 4. Extraire le username du token
     username = jwtService.extractUsername(jwt);
+    System.out.println("Username extrait : " + username);
+
     // 4. Si username trouvé ET pas encore authentifié
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
         
@@ -52,6 +56,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         // 6. Vérifier si le token est valide
         if (jwtService.isTokenValid(jwt, userDetails)) {
+            System.out.println("Token valide !");
             
             // 7. Créer l'objet d'authentification
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -65,7 +70,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             
             // 9. Dire à Spring Security : "Cet utilisateur est authentifié !"
             SecurityContextHolder.getContext().setAuthentication(authToken);
-        }
+        } else {
+    System.out.println("Token INVALIDE !");
+}
     }
         
         filterChain.doFilter(request, response);
