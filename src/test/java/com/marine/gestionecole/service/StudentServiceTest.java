@@ -2,6 +2,7 @@ package com.marine.gestionecole.service;
 
 import com.marine.gestionecole.entity.Student;
 import com.marine.gestionecole.repository.StudentRepository;
+import com.marine.gestionecole.dto.StudentResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +49,7 @@ class StudentServiceTest {
         when(repository.findAll()).thenReturn(students);
 
         // Act
-        List<Student> result = studentService.findAll();
+        List<StudentResponse> result = studentService.findAll();
 
         // Assert
         assertNotNull(result);
