@@ -1,5 +1,7 @@
 package com.marine.gestionecole.config;
 
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,72 +16,94 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import jakarta.servlet.http.HttpServletResponse;
-
-import java.util.Arrays;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtAuthFilter jwtAuthFilter;
+  private final JwtAuthFilter jwtAuthFilter;
 
-    public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
-        this.jwtAuthFilter = jwtAuthFilter;
-    }
+  public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
+    this.jwtAuthFilter = jwtAuthFilter;
+  }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        // Routes publiques (sans token)
-                        .requestMatchers("/api/health").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
-                        // Toutes les autres routes nécessitent un token JWT
-                        .requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .exceptionHandling(exceptions -> exceptions
-                    .authenticationEntryPoint((request, response, authException) -> {
-                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
-                        response.setContentType("application/json");
-                        response.getWriter().write("{\"error\": \"Unauthorized\"}");
-                    })
-            )
-                // Ajouter le filtre JWT avant le filtre d'authentification standard
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http)
+    throws Exception {
+    http
+      .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+      .csrf(csrf -> csrf.disable())
+      .authorizeHttpRequests(auth ->
+        auth
+          // Routes publiques
+          .requestMatchers("/api/health")
+          .permitAll()
+          .requestMatchers("/api/auth/**")
+          .permitAll()
+          // Lecture → USER et ADMIN
+          .requestMatchers(HttpMethod.GET, "/api/**")
+          .hasAnyRole("USER", "ADMIN")
+          // Notes → USER et ADMIN (ajouter et modifier seulement)
+          .requestMatchers(HttpMethod.POST, "/api/grades/**")
+          .hasAnyRole("USER", "ADMIN")
+          .requestMatchers(HttpMethod.PUT, "/api/grades/**")
+          .hasAnyRole("USER", "ADMIN")
+          // Tout le reste → ADMIN uniquement
+          .requestMatchers(HttpMethod.POST, "/api/**")
+          .hasRole("ADMIN")
+          .requestMatchers(HttpMethod.PUT, "/api/**")
+          .hasRole("ADMIN")
+          .requestMatchers(HttpMethod.DELETE, "/api/**")
+          .hasRole("ADMIN")
+          .anyRequest()
+          .authenticated()
+      )
+      .sessionManagement(session ->
+        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      )
+      .exceptionHandling(exceptions ->
+        exceptions.authenticationEntryPoint(
+          (request, response, authException) -> {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\": \"Unauthorized\"}");
+          }
+        )
+      )
+      // Ajouter le filtre JWT avant le filtre d'authentification standard
+      .addFilterBefore(
+        jwtAuthFilter,
+        UsernamePasswordAuthenticationFilter.class
+      );
 
-        return http.build();
-    }
+    return http.build();
+  }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:5173",
-            "https://school-management-react.netlify.app"
-        ));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
-        configuration.setExposedHeaders(Arrays.asList("Set-Cookie"));
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(
+      Arrays.asList(
+        "http://localhost:5173",
+        "https://school-management-react.netlify.app"
+      )
+    );
+    configuration.setAllowedMethods(
+      Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")
+    );
+    configuration.setAllowedHeaders(Arrays.asList("*"));
+    configuration.setAllowCredentials(true);
+    configuration.setExposedHeaders(Arrays.asList("Set-Cookie"));
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);  // Toutes les routes
-        return source;
-    }
-    
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
+    UrlBasedCorsConfigurationSource source =
+      new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration); // Toutes les routes
+    return source;
+  }
 
+  @Bean
+  public AuthenticationManager authenticationManager(
+    AuthenticationConfiguration config
+  ) throws Exception {
+    return config.getAuthenticationManager();
+  }
 }
