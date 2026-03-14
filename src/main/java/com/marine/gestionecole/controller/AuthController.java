@@ -19,7 +19,7 @@ public class AuthController {
   @Autowired
   private CookieService cookieService;
 
-  @Autowired
+  @Autowired 
   private AuthenticationService authenticationService;
 
   @PostMapping("/register")

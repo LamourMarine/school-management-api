@@ -4,6 +4,7 @@ import com.marine.gestionecole.entity.Student;
 import com.marine.gestionecole.entity.Grade;
 import com.marine.gestionecole.service.StudentService;
 import com.marine.gestionecole.service.GradeService;
+import com.marine.gestionecole.dto.StudentResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class StudentController {
     
     // GET /api/students - Récupérer tous les étudiants
     @GetMapping
-    public List<Student> getAllStudents() {
+    public List<StudentResponse> getAllStudents() {
         return service.findAll();
     }
     
