@@ -23,7 +23,7 @@ public class CourseController {
     @Autowired
     private GradeService gradeService;
 
-    // Get /api/course - récupérer tous les cours
+    // Get /api/courses - récupérer tous les cours
     @GetMapping 
     public List<Course> getAllCourse() {
         return service.findAll();
@@ -61,7 +61,7 @@ public class CourseController {
 
     // GET /api/course/{id}/grades - Récupérer toutes les notes d'un cours
     @GetMapping("/{id}/grades")
-    public ResponseEntity<?> getNotesCourse(@PathVariable Long id) {
+    public ResponseEntity<?> getCourseGrades(@PathVariable Long id) {
         // 1. Vérifier que le cours existe
         if (!service.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();
