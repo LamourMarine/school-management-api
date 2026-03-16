@@ -1,6 +1,7 @@
 package com.marine.gestionecole.service;
 
 import com.marine.gestionecole.entity.Student;
+import com.marine.gestionecole.repository.GradeRepository;
 import com.marine.gestionecole.repository.StudentRepository;
 import com.marine.gestionecole.dto.StudentResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -22,6 +24,9 @@ class StudentServiceTest {
 
     @Mock
     private StudentRepository repository;
+
+    @Mock
+    private GradeRepository gradeRepository;
 
     @InjectMocks
     private StudentService studentService;
@@ -47,6 +52,7 @@ class StudentServiceTest {
         // Arrange
         List<Student> students = Arrays.asList(student1, student2);
         when(repository.findAll()).thenReturn(students);
+        when(gradeRepository.findByStudentId(any())).thenReturn(List.of());
 
         // Act
         List<StudentResponse> result = studentService.findAll();
