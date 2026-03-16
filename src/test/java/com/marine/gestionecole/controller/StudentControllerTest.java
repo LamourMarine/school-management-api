@@ -224,4 +224,13 @@ class StudentControllerTest {
       .andExpect(status().isOk())
       .andExpect(jsonPath("$").value(12.0));
   }
+
+  @Test
+  void testCount() throws Exception {
+    when(studentService.count()).thenReturn(5L);
+
+    mockMvc
+    .perform(get("/api/students/count"))
+    .andExpect(jsonPath("$").value(5L));
+  }
 }

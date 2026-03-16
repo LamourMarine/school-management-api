@@ -154,6 +154,6 @@ class StudentServiceTest {
 
         // Assert
         assertEquals(5L, result);
-        verify(repository, times(1)).count();
+            verify(repository, times(1)).count();
     }
 }
