@@ -1,1 +1,0 @@
-DELETE FROM refresh_tokens WHERE token = 'a0c08604-13bd-4fb1-9db7-101ff5cf5858';
