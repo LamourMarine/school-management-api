@@ -164,13 +164,12 @@ public class AuthenticationServiceTest {
 
     // Assert
     assertThrows(RuntimeException.class, () -> {
-        authenticationService.refresh("fake-refresh-token");
+      authenticationService.refresh("fake-refresh-token");
     });
   }
 
   @Test
-  void  refresh_shouldThrowsException_whenRefreshTokenIsExpired() {
-
+  void refresh_shouldThrowsException_whenRefreshTokenIsExpired() {
     //Arrange
     when(refreshTokenService.findByToken(any())).thenReturn(mockRefreshToken);
     when(refreshTokenService.verifyExpiration(any())).thenThrow(
@@ -179,13 +178,12 @@ public class AuthenticationServiceTest {
 
     //Assert
     assertThrows(RuntimeException.class, () -> {
-        authenticationService.refresh("fake-refresh-token");
+      authenticationService.refresh("fake-refresh-token");
     });
-
   }
 
   @Test
-  void logout_shouldLogout(){
+  void logout_shouldLogout() {
     // Arrange
     when(refreshTokenService.findByToken(any())).thenReturn(mockRefreshToken);
     doNothing().when(refreshTokenService).revokeByUser(mockUser);
