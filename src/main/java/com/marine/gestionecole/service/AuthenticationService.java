@@ -130,5 +130,7 @@ public class AuthenticationService {
     // Révoquer tous les tokens de cet utilisateur
     refreshTokenService.revokeByUser(token.getUser());
 
+    // Supprimer les refresh token lors de la deconnexion
+
     }
 }

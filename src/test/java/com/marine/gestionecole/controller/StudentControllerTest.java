@@ -36,7 +36,6 @@ class StudentControllerTest {
   private StudentController studentController;
 
   private ObjectMapper objectMapper;
-  
 
   @MockitoBean
   private StudentService studentService;
@@ -230,7 +229,7 @@ class StudentControllerTest {
     when(studentService.count()).thenReturn(5L);
 
     mockMvc
-    .perform(get("/api/students/count"))
-    .andExpect(jsonPath("$").value(5L));
+      .perform(get("/api/students/count"))
+      .andExpect(jsonPath("$").value(5L));
   }
 }

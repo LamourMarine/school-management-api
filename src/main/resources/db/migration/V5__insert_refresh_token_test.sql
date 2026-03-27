@@ -1,0 +1,2 @@
+-- Insertion de RefreshToken
+INSERT INTO refresh_tokens (token, user_id, expiry_date, created_at, revoked) VALUES ('a0c08604-13bd-4fb1-9db7-101ff5cf5858', 10, '2026-02-8 16:50:25', '2026-01-14 15:00:00', true);

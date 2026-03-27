@@ -1,7 +1,13 @@
 package com.marine.gestionecole.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import com.marine.gestionecole.entity.Course;
 import com.marine.gestionecole.repository.CourseRepository;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,156 +15,149 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class CourseServiceTest {
 
-    @Mock
-    private CourseRepository repository;
- 
-    @InjectMocks
-    private CourseService courseService;
+  @Mock
+  private CourseRepository repository;
 
-    private Course course1;
-    private Course course2;
+  @InjectMocks
+  private CourseService courseService;
 
-    @BeforeEach
-    void setUp() {
-        course1 = new Course();
-        course1.setId(1L);
-        course1.setTitle("Mathematics");
-        course1.setCode("MATH101");
-        course1.setTeacher("Dr. Smith");
+  private Course course1;
+  private Course course2;
 
-        course2 = new Course();
-        course2.setId(2L);
-        course2.setTitle("Physics");
-        course2.setCode("PHYS101");
-        course2.setTeacher("Dr. Johnson");
-    }
+  @BeforeEach
+  void setUp() {
+    course1 = new Course();
+    course1.setId(1L);
+    course1.setTitle("Mathematics");
+    course1.setCode("MATH101");
+    course1.setTeacher("Dr. Smith");
 
-    @Test
-    void testFindAll() {
-        // Arrange
-        List<Course> courses = Arrays.asList(course1, course2);
-        when(repository.findAll()).thenReturn(courses);
+    course2 = new Course();
+    course2.setId(2L);
+    course2.setTitle("Physics");
+    course2.setCode("PHYS101");
+    course2.setTeacher("Dr. Johnson");
+  }
 
-        // Act
-        List<Course> result = courseService.findAll();
+  @Test
+  void testFindAll() {
+    // Arrange
+    List<Course> courses = Arrays.asList(course1, course2);
+    when(repository.findAll()).thenReturn(courses);
 
-        // Assert
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals("Mathematics", result.get(0).getTitle());
-        assertEquals("Physics", result.get(1).getTitle());
-        verify(repository, times(1)).findAll();
-    }
+    // Act
+    List<Course> result = courseService.findAll();
 
-    @Test
-    void testFindById_Found() {
-        // Arrange
-        when(repository.findById(1L)).thenReturn(Optional.of(course1));
+    // Assert
+    assertNotNull(result);
+    assertEquals(2, result.size());
+    assertEquals("Mathematics", result.get(0).getTitle());
+    assertEquals("Physics", result.get(1).getTitle());
+    verify(repository, times(1)).findAll();
+  }
 
-        // Act
-        Optional<Course> result = courseService.findById(1L);
+  @Test
+  void testFindById_Found() {
+    // Arrange
+    when(repository.findById(1L)).thenReturn(Optional.of(course1));
 
-        // Assert
-        assertTrue(result.isPresent());
-        assertEquals("Mathematics", result.get().getTitle());
-        assertEquals("MATH101", result.get().getCode());
-        assertEquals("Dr. Smith", result.get().getTeacher());
-        verify(repository, times(1)).findById(1L);
-    }
+    // Act
+    Optional<Course> result = courseService.findById(1L);
 
-    @Test
-    void testFindById_NotFound() {
-        // Arrange
-        when(repository.findById(99L)).thenReturn(Optional.empty());
+    // Assert
+    assertTrue(result.isPresent());
+    assertEquals("Mathematics", result.get().getTitle());
+    assertEquals("MATH101", result.get().getCode());
+    assertEquals("Dr. Smith", result.get().getTeacher());
+    verify(repository, times(1)).findById(1L);
+  }
 
-        // Act
-        Optional<Course> result = courseService.findById(99L);
+  @Test
+  void testFindById_NotFound() {
+    // Arrange
+    when(repository.findById(99L)).thenReturn(Optional.empty());
 
-        // Assert
-        assertFalse(result.isPresent());
-        verify(repository, times(1)).findById(99L);
-    }
+    // Act
+    Optional<Course> result = courseService.findById(99L);
 
-    @Test
-    void testSave_CreateNewCourse() {
-        // Arrange
-        Course newCourse = new Course();
-        newCourse.setTitle("Chemistry");
-        newCourse.setCode("CHEM101");
-        newCourse.setTeacher("Dr. Brown");
+    // Assert
+    assertFalse(result.isPresent());
+    verify(repository, times(1)).findById(99L);
+  }
 
-        Course savedCourse = new Course();
-        savedCourse.setId(3L);
-        savedCourse.setTitle("Chemistry");
-        savedCourse.setCode("CHEM101");
-        savedCourse.setTeacher("Dr. Brown");
+  @Test
+  void testSave_CreateNewCourse() {
+    // Arrange
+    Course newCourse = new Course();
+    newCourse.setTitle("Chemistry");
+    newCourse.setCode("CHEM101");
+    newCourse.setTeacher("Dr. Brown");
 
-        when(repository.save(any(Course.class))).thenReturn(savedCourse);
+    Course savedCourse = new Course();
+    savedCourse.setId(3L);
+    savedCourse.setTitle("Chemistry");
+    savedCourse.setCode("CHEM101");
+    savedCourse.setTeacher("Dr. Brown");
 
-        // Act
-        Course result = courseService.save(newCourse);
+    when(repository.save(any(Course.class))).thenReturn(savedCourse);
 
-        // Assert
-        assertNotNull(result);
-        assertNotNull(result.getId());
-        assertEquals("Chemistry", result.getTitle());
-        assertEquals("CHEM101", result.getCode());
-        verify(repository, times(1)).save(newCourse);
-    }
+    // Act
+    Course result = courseService.save(newCourse);
 
-    @Test
-    void testSave_UpdateExistingCourse() {
-        // Arrange
-        Course existingCourse = new Course();
-        existingCourse.setId(1L);
-        existingCourse.setTitle("Advanced Mathematics");
-        existingCourse.setCode("MATH101");
-        existingCourse.setTeacher("Dr. Smith");
+    // Assert
+    assertNotNull(result);
+    assertNotNull(result.getId());
+    assertEquals("Chemistry", result.getTitle());
+    assertEquals("CHEM101", result.getCode());
+    verify(repository, times(1)).save(newCourse);
+  }
 
-        when(repository.save(any(Course.class))).thenReturn(existingCourse);
+  @Test
+  void testSave_UpdateExistingCourse() {
+    // Arrange
+    Course existingCourse = new Course();
+    existingCourse.setId(1L);
+    existingCourse.setTitle("Advanced Mathematics");
+    existingCourse.setCode("MATH101");
+    existingCourse.setTeacher("Dr. Smith");
 
-        // Act
-        Course result = courseService.save(existingCourse);
+    when(repository.save(any(Course.class))).thenReturn(existingCourse);
 
-        // Assert
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("Advanced Mathematics", result.getTitle());
-        verify(repository, times(1)).save(existingCourse);
-    }
+    // Act
+    Course result = courseService.save(existingCourse);
 
-    @Test
-    void testDeleteById() {
-        // Arrange
-        doNothing().when(repository).deleteById(1L);
+    // Assert
+    assertNotNull(result);
+    assertEquals(1L, result.getId());
+    assertEquals("Advanced Mathematics", result.getTitle());
+    verify(repository, times(1)).save(existingCourse);
+  }
 
-        // Act
-        courseService.deleteById(1L);
+  @Test
+  void testDeleteById() {
+    // Arrange
+    doNothing().when(repository).deleteById(1L);
 
-        // Assert
-        verify(repository, times(1)).deleteById(1L);
-    }
+    // Act
+    courseService.deleteById(1L);
 
-    @Test
-    void testCount() {
-        // Arrange
-        when(repository.count()).thenReturn(8L);
+    // Assert
+    verify(repository, times(1)).deleteById(1L);
+  }
 
-        // Act
-        long result = courseService.count();
+  @Test
+  void testCount() {
+    // Arrange
+    when(repository.count()).thenReturn(8L);
 
-        // Assert
-        assertEquals(8L, result);
-        verify(repository, times(1)).count();
-    }
+    // Act
+    long result = courseService.count();
+
+    // Assert
+    assertEquals(8L, result);
+    verify(repository, times(1)).count();
+  }
 }

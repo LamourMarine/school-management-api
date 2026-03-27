@@ -57,6 +57,9 @@ public class AuthController {
       // Enlever le refresh token de la réponse (sécurité)
       authResponse.setRefreshToken(null);
 
+      // Supprimer le refresh_token precedant apres un revoked true
+      
+
       // Retourner au frontend
       return ResponseEntity.ok(authResponse);
     } catch (Exception e) {

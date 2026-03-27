@@ -39,15 +39,15 @@ public class SecurityConfig {
           .permitAll()
           .requestMatchers("/api/auth/**")
           .permitAll()
-          // Lecture → USER et ADMIN
+          // Lecture : USER et ADMIN
           .requestMatchers(HttpMethod.GET, "/api/**")
           .hasAnyRole("USER", "ADMIN")
-          // Notes → USER et ADMIN (ajouter et modifier seulement)
+          // Notes : USER et ADMIN (ajouter et modifier seulement)
           .requestMatchers(HttpMethod.POST, "/api/grades/**")
           .hasAnyRole("USER", "ADMIN")
           .requestMatchers(HttpMethod.PUT, "/api/grades/**")
           .hasAnyRole("USER", "ADMIN")
-          // Tout le reste → ADMIN uniquement
+          // Tout le reste : ADMIN uniquement
           .requestMatchers(HttpMethod.POST, "/api/**")
           .hasRole("ADMIN")
           .requestMatchers(HttpMethod.PUT, "/api/**")
