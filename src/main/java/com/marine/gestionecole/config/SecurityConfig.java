@@ -56,19 +56,27 @@ public class SecurityConfig {
           .hasRole("ADMIN")
           .anyRequest()
           .authenticated()
+          
       )
       .sessionManagement(session ->
         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       )
       .exceptionHandling(exceptions ->
-        exceptions.authenticationEntryPoint(
+        exceptions
+        .authenticationEntryPoint(
           (request, response, authException) -> {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
             response.setContentType("application/json");
             response.getWriter().write("{\"error\": \"Unauthorized\"}");
           }
         )
+        .accessDeniedHandler((request, response, accessDeniedException) -> {
+          response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+          response.setContentType("application/json");
+          response.getWriter().write("{\"error\": \"Forbidden\"}");
+        })
       )
+      
       // Ajouter le filtre JWT avant le filtre d'authentification standard
       .addFilterBefore(
         jwtAuthFilter,
