@@ -5,7 +5,7 @@ import com.marine.gestionecole.dto.LoginRequest;
 import com.marine.gestionecole.dto.RegisterRequest;
 import com.marine.gestionecole.entity.RefreshToken;
 import com.marine.gestionecole.entity.User;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +34,7 @@ public class AuthenticationService {
     this.authenticationManager = authenticationManager;
   }
 
+  @Transactional
   public AuthResponse register(RegisterRequest request) {
     User user = userService.registerUser(
       request.getUsername(),
@@ -60,6 +61,7 @@ public class AuthenticationService {
     );
   }
 
+  @Transactional
   public AuthResponse login(LoginRequest request) {
     authenticationManager.authenticate(
       new UsernamePasswordAuthenticationToken(
@@ -128,6 +130,7 @@ public class AuthenticationService {
     );
   }
 
+  @Transactional
   public void logout(String refreshToken) {
     // Chercher le refresh token en base
     RefreshToken token = refreshTokenService.findByToken(refreshToken);
@@ -135,6 +138,5 @@ public class AuthenticationService {
     // Révoquer tous les tokens de cet utilisateur
     refreshTokenService.revokeByUser(token.getUser());
 
-    // Supprimer les refresh token lors de la deconnexion
   }
 }
