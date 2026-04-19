@@ -5,53 +5,55 @@ import com.marine.gestionecole.repository.GradeRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GradeService {
 
-  @Autowired
-  private GradeRepository repository;
+  final GradeRepository gradeRepository;
+
+  GradeService(GradeRepository gradeRepository) {
+    this.gradeRepository = gradeRepository;
+  }
 
   //Recuperer toutes les notes
   public List<Grade> findAll() {
-    return repository.findAll();
+    return gradeRepository.findAll();
   }
 
   // Recuperer une note par ID
   public Optional<Grade> findById(Long id) {
-    return repository.findById(id);
+    return gradeRepository.findById(id);
   }
 
   //Récuperer les notes d'un étudiant
   public List<Grade> findByStudentId(Long studentId) {
-    return repository.findByStudentId(studentId);
+    return gradeRepository.findByStudentId(studentId);
   }
 
   //Récuperer les notes d'un cours
   public List<Grade> findByCourseId(Long courseId) {
-    return repository.findByCourseId(courseId);
+    return gradeRepository.findByCourseId(courseId);
   }
 
   //Créer ou modifier une note
   public Grade save(Grade grade) {
-    return repository.save(grade);
+    return gradeRepository.save(grade);
   }
 
   //Supprimer une note
   public void deleteById(Long id) {
-    repository.deleteById(id);
+    gradeRepository.deleteById(id);
   }
 
   //Compter le nombre de notes
   public long count() {
-    return repository.count();
+    return gradeRepository.count();
   }
 
   // Recuperer la moyenne d'un etudiant
   public Double getStudentAverage(Long studentId) {
-    OptionalDouble average = repository
+    OptionalDouble average = gradeRepository
       .findByStudentId(studentId)
       .stream()
       .mapToDouble(Grade::getScore)
