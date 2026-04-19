@@ -5,10 +5,7 @@ import com.marine.gestionecole.dto.LoginRequest;
 import com.marine.gestionecole.dto.RegisterRequest;
 import com.marine.gestionecole.entity.RefreshToken;
 import com.marine.gestionecole.entity.User;
-
 import jakarta.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,17 +14,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService {
 
-  @Autowired
-  private UserService userService;
+  final UserService userService;
 
-  @Autowired
-  private JwtService jwtService;
+  final JwtService jwtService;
 
-  @Autowired
-  private RefreshTokenService refreshTokenService;
+  final RefreshTokenService refreshTokenService;
 
-  @Autowired
-  private AuthenticationManager authenticationManager;
+  final AuthenticationManager authenticationManager;
+
+  AuthenticationService(
+    UserService userService,
+    JwtService jwtService,
+    RefreshTokenService refreshTokenService,
+    AuthenticationManager authenticationManager
+  ) {
+    this.userService = userService;
+    this.jwtService = jwtService;
+    this.refreshTokenService = refreshTokenService;
+    this.authenticationManager = authenticationManager;
+  }
 
   public AuthResponse register(RegisterRequest request) {
     User user = userService.registerUser(
@@ -123,7 +128,7 @@ public class AuthenticationService {
     );
   }
 
-    public void logout(String refreshToken) {
+  public void logout(String refreshToken) {
     // Chercher le refresh token en base
     RefreshToken token = refreshTokenService.findByToken(refreshToken);
 
@@ -131,6 +136,5 @@ public class AuthenticationService {
     refreshTokenService.revokeByUser(token.getUser());
 
     // Supprimer les refresh token lors de la deconnexion
-
-    }
+  }
 }

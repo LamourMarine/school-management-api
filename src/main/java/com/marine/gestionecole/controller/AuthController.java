@@ -7,7 +7,6 @@ import com.marine.gestionecole.service.AuthenticationService;
 import com.marine.gestionecole.service.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +15,17 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = { "http://localhost:5173", "http://localhost:3000" })
 public class AuthController {
 
-  @Autowired
-  private CookieService cookieService;
+  final CookieService cookieService;
 
-  @Autowired 
-  private AuthenticationService authenticationService;
+  final AuthenticationService authenticationService;
+
+  AuthController(
+    CookieService cookieService,
+    AuthenticationService authenticationService
+  ) {
+    this.cookieService = cookieService;
+    this.authenticationService = authenticationService;
+  }
 
   @PostMapping("/register")
   public ResponseEntity<?> register(
@@ -58,7 +63,6 @@ public class AuthController {
       authResponse.setRefreshToken(null);
 
       // Supprimer le refresh_token precedant apres un revoked true
-      
 
       // Retourner au frontend
       return ResponseEntity.ok(authResponse);
@@ -96,7 +100,7 @@ public class AuthController {
       return ResponseEntity.ok(authResponse);
     } catch (Exception e) {
       System.out.println("Erreur refresh : " + e.getMessage());
-    e.printStackTrace();
+      e.printStackTrace();
       return ResponseEntity.badRequest().body(
         "Invalid or expired refresh token"
       );

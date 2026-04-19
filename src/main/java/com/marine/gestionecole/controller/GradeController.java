@@ -1,14 +1,13 @@
 package com.marine.gestionecole.controller;
 
 import com.marine.gestionecole.entity.Course;
-import com.marine.gestionecole.entity.Student;
 import com.marine.gestionecole.entity.Grade;
+import com.marine.gestionecole.entity.Student;
 import com.marine.gestionecole.service.CourseService;
-import com.marine.gestionecole.service.StudentService;
 import com.marine.gestionecole.service.GradeService;
+import com.marine.gestionecole.service.StudentService;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +16,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/grades")
 public class GradeController {
 
-  @Autowired
-  private GradeService gradeService;
-  
-  @Autowired
-  private StudentService studentService;
-  
-  @Autowired
-  private CourseService courseService;
+  final GradeService gradeService;
+
+  final StudentService studentService;
+
+  final CourseService courseService;
+
+  GradeController(
+    GradeService gradeService,
+    StudentService studentService,
+    CourseService courseService
+  ) {
+    this.gradeService = gradeService;
+    this.studentService = studentService;
+    this.courseService = courseService;
+  }
 
   // GET /api/grades - récupérer toutes les notes
   @GetMapping
@@ -111,6 +117,7 @@ public class GradeController {
 
   // Classe interne pour recevoir les données JSON
   public static class GradeRequest {
+
     private double score;
     private Long studentId;
     private Long courseId;
@@ -139,6 +146,4 @@ public class GradeController {
       this.courseId = courseId;
     }
   }
-
-  
 }

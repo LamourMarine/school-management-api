@@ -1,4 +1,4 @@
-# Utiliser une image Java 21 (vérifie ta version Java)
+# Utiliser une image Java 21 
 FROM eclipse-temurin:21-jdk-alpine
 
 # Répertoire de travail

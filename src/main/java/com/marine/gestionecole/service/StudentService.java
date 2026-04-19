@@ -8,21 +8,25 @@ import com.marine.gestionecole.repository.StudentRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StudentService {
 
-  @Autowired
-  private StudentRepository repository;
+  final StudentRepository studentRepository;
+  final GradeRepository gradeRepository;
 
-  @Autowired
-  private GradeRepository gradeRepository;
+  StudentService(
+    StudentRepository studentRepository,
+    GradeRepository gradeRepository
+  ) {
+    this.studentRepository = studentRepository;
+    this.gradeRepository = gradeRepository;
+  }
 
   // Récupérer tous les étudiants
   public List<StudentResponse> findAll() {
-    return repository
+    return studentRepository
       .findAll()
       .stream()
       .map(student -> {
@@ -45,21 +49,21 @@ public class StudentService {
 
   // Récupérer un étudiant par ID
   public Optional<Student> findById(Long id) {
-    return repository.findById(id);
+    return studentRepository.findById(id);
   }
 
   // Créer ou modifier un étudiant
   public Student save(Student student) {
-    return repository.save(student);
+    return studentRepository.save(student);
   }
 
   // Supprimer un étudiant
   public void deleteById(Long id) {
-    repository.deleteById(id);
+    studentRepository.deleteById(id);
   }
 
   // Compter le nombre d'étudiants
   public long count() {
-    return repository.count();
+    return studentRepository.count();
   }
 }
