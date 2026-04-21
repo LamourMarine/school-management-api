@@ -33,10 +33,10 @@ class CourseServiceTest {
 
   @BeforeEach
   void setUp() {
-    Teacher teacher1 = new Teacher();
+    teacher1 = new Teacher();
     teacher1.setId(1L);
 
-    Teacher teacher2 = new Teacher();
+    teacher2 = new Teacher();
     teacher2.setId(2L);
 
     course1 = new Course();
@@ -81,7 +81,8 @@ class CourseServiceTest {
     assertTrue(result.isPresent());
     assertEquals("Mathematics", result.get().getTitle());
     assertEquals("MATH101", result.get().getCode());
-    assertEquals(teacher1, course1.getTeacher()); // ✅    verify(repository, times(1)).findById(1L);
+    assertEquals(teacher1, course1.getTeacher());
+    verify(repository, times(1)).findById(1L);
   }
 
   @Test
