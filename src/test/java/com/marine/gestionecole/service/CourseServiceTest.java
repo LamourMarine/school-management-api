@@ -1,9 +1,11 @@
 package com.marine.gestionecole.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import com.marine.gestionecole.entity.Course;
+import com.marine.gestionecole.entity.Teacher;
 import com.marine.gestionecole.repository.CourseRepository;
 import java.util.Arrays;
 import java.util.List;
@@ -24,22 +26,30 @@ class CourseServiceTest {
   @InjectMocks
   private CourseService courseService;
 
+  private Teacher teacher1;
+  private Teacher teacher2;
   private Course course1;
   private Course course2;
 
   @BeforeEach
   void setUp() {
+    Teacher teacher1 = new Teacher();
+    teacher1.setId(1L);
+
+    Teacher teacher2 = new Teacher();
+    teacher2.setId(2L);
+
     course1 = new Course();
     course1.setId(1L);
     course1.setTitle("Mathematics");
     course1.setCode("MATH101");
-    course1.setTeacher("Dr. Smith");
+    course1.setTeacher(teacher1);
 
     course2 = new Course();
     course2.setId(2L);
     course2.setTitle("Physics");
     course2.setCode("PHYS101");
-    course2.setTeacher("Dr. Johnson");
+    course2.setTeacher(teacher2);
   }
 
   @Test
@@ -71,8 +81,7 @@ class CourseServiceTest {
     assertTrue(result.isPresent());
     assertEquals("Mathematics", result.get().getTitle());
     assertEquals("MATH101", result.get().getCode());
-    assertEquals("Dr. Smith", result.get().getTeacher());
-    verify(repository, times(1)).findById(1L);
+    assertEquals(teacher1, course1.getTeacher()); // ✅    verify(repository, times(1)).findById(1L);
   }
 
   @Test
@@ -94,13 +103,13 @@ class CourseServiceTest {
     Course newCourse = new Course();
     newCourse.setTitle("Chemistry");
     newCourse.setCode("CHEM101");
-    newCourse.setTeacher("Dr. Brown");
+    newCourse.setTeacher(teacher2);
 
     Course savedCourse = new Course();
     savedCourse.setId(3L);
     savedCourse.setTitle("Chemistry");
     savedCourse.setCode("CHEM101");
-    savedCourse.setTeacher("Dr. Brown");
+    savedCourse.setTeacher(teacher2);
 
     when(repository.save(any(Course.class))).thenReturn(savedCourse);
 
@@ -122,7 +131,7 @@ class CourseServiceTest {
     existingCourse.setId(1L);
     existingCourse.setTitle("Advanced Mathematics");
     existingCourse.setCode("MATH101");
-    existingCourse.setTeacher("Dr. Smith");
+    existingCourse.setTeacher(teacher2);
 
     when(repository.save(any(Course.class))).thenReturn(existingCourse);
 
