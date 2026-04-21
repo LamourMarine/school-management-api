@@ -19,8 +19,10 @@ public class Course {
   @Column(nullable = false)
   private String title;
 
-  private String teacher;
-
   @Column(nullable = false, unique = true)
   private String code;
+
+  @ManyToOne
+  @JoinColumn(name = "teacher_id")
+  private Teacher teacher;
 }
