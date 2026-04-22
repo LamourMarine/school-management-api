@@ -41,12 +41,12 @@ public class SecurityConfig {
           .permitAll()
           // Lecture : USER et ADMIN
           .requestMatchers(HttpMethod.GET, "/api/**")
-          .hasAnyRole("USER", "ADMIN")
-          // Notes : USER et ADMIN (ajouter et modifier seulement)
+          .hasAnyRole("USER", "TEACHER", "ADMIN")
+          // Notes : TEACHER et ADMIN (ajouter et modifier seulement)
           .requestMatchers(HttpMethod.POST, "/api/grades/**")
-          .hasAnyRole("USER", "ADMIN")
+          .hasAnyRole("TEACHER", "ADMIN")
           .requestMatchers(HttpMethod.PUT, "/api/grades/**")
-          .hasAnyRole("USER", "ADMIN")
+          .hasAnyRole("TEACHER", "ADMIN")
           // Tout le reste : ADMIN uniquement
           .requestMatchers(HttpMethod.POST, "/api/**")
           .hasRole("ADMIN")
