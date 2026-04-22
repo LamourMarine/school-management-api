@@ -21,6 +21,6 @@ public class Teacher {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
     private List<Course> courses;
 }
