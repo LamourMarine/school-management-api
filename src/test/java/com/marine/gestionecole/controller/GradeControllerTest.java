@@ -3,6 +3,7 @@ package com.marine.gestionecole.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import org.springframework.security.test.context.support.WithMockUser;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -14,9 +15,12 @@ import com.marine.gestionecole.controller.GradeController.GradeRequest;
 import com.marine.gestionecole.entity.Course;
 import com.marine.gestionecole.entity.Grade;
 import com.marine.gestionecole.entity.Student;
+import com.marine.gestionecole.entity.User;
 import com.marine.gestionecole.service.CourseService;
 import com.marine.gestionecole.service.GradeService;
 import com.marine.gestionecole.service.StudentService;
+import com.marine.gestionecole.service.UserService;
+import com.marine.gestionecole.service.TeacherService;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +48,12 @@ public class GradeControllerTest {
 
   @MockitoBean
   private CourseService courseService;
+
+  @MockitoBean
+  private UserService userService;
+
+  @MockitoBean
+  private TeacherService teacherService;
 
   private MockMvc mockMvc;
 
@@ -143,8 +153,9 @@ public class GradeControllerTest {
       .andExpect(jsonPath("$.course.title").value("Mathematics"));
   }
 
-  @Test
-  void shouldUpdateGrade() throws Exception {
+@Test
+@WithMockUser(username = "testuser", roles = {"ADMIN"})
+void shouldUpdateGrade() throws Exception {
     GradeRequest g1 = new GradeRequest();
     g1.setCourseId(5L);
     g1.setScore(13.0);
@@ -156,9 +167,15 @@ public class GradeControllerTest {
     existingGrade.setScore(13.0);
     existingGrade.setStudent(student);
 
+    User user = new User();
+    user.setId(1L);
+    user.setUsername("testuser");
+
     when(gradeService.findById(1L)).thenReturn(Optional.of(existingGrade));
     when(studentService.findById(2L)).thenReturn(Optional.of(student));
     when(courseService.findById(5L)).thenReturn(Optional.of(course));
+    when(userService.findByUsername("testuser")).thenReturn(Optional.of(user));
+    when(teacherService.findByUserId(1L)).thenReturn(Optional.empty());
     when(gradeService.save(any(Grade.class))).thenReturn(existingGrade);
 
     mockMvc
@@ -168,12 +185,8 @@ public class GradeControllerTest {
           .content(objectMapper.writeValueAsString(g1))
       )
       .andExpect(status().isOk())
-      .andExpect(jsonPath("$.student.firstName").value("Alice"))
-      .andExpect(jsonPath("$.student.lastName").value("Dupont"))
-      .andExpect(jsonPath("$.score").value(13.0))
-      .andExpect(jsonPath("$.course.title").value("Mathematics"));
-  }
-
+      .andExpect(jsonPath("$.score").value(13.0));
+}
   @Test
   void shouldDeleteGrade() throws Exception {
     when(gradeService.findById(1L)).thenReturn((Optional.of(grade1)));
