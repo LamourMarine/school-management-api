@@ -25,6 +25,11 @@ public class CourseService {
     return repository.findById(id);
   }
 
+  // Récupérer les professeurs liés à un cours
+  public List<Course> findByTeacherId(Long id) {
+    return repository.findByTeacherId(id);
+  }
+
   // Creer ou modifier un cours
   public Course save(Course course) {
     return repository.save(course);

@@ -73,6 +73,13 @@ public class CourseController {
     return ResponseEntity.ok(grades);
   }
 
+  // GET /api/course/{id}/teachers
+    @GetMapping("/{id}/courses")
+    public ResponseEntity<?> getTeacherCourses(@PathVariable Long id) {
+        List<Course> courses = courseService.findByTeacherId(id);
+        return ResponseEntity.ok(courses);
+    }
+
   // DELETE /api/course/{id} - Supprimer un cours
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
