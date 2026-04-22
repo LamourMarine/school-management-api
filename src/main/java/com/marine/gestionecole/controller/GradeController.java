@@ -3,18 +3,26 @@ package com.marine.gestionecole.controller;
 import com.marine.gestionecole.entity.Course;
 import com.marine.gestionecole.entity.Grade;
 import com.marine.gestionecole.entity.Student;
+import com.marine.gestionecole.entity.Teacher;
+import com.marine.gestionecole.entity.User;
 import com.marine.gestionecole.service.CourseService;
 import com.marine.gestionecole.service.GradeService;
 import com.marine.gestionecole.service.StudentService;
+import com.marine.gestionecole.service.TeacherService;
+import com.marine.gestionecole.service.UserService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/grades")
 public class GradeController {
+
+  private final UserService userService;
 
   final GradeService gradeService;
 
@@ -22,14 +30,20 @@ public class GradeController {
 
   final CourseService courseService;
 
+  final TeacherService teacherService;
+
   GradeController(
     GradeService gradeService,
     StudentService studentService,
-    CourseService courseService
+    CourseService courseService,
+    TeacherService teacherService,
+    UserService userService
   ) {
     this.gradeService = gradeService;
     this.studentService = studentService;
     this.courseService = courseService;
+    this.teacherService = teacherService;
+    this.userService = userService;
   }
 
   // GET /api/grades - récupérer toutes les notes
@@ -91,6 +105,26 @@ public class GradeController {
       return ResponseEntity.badRequest().body("Cours introuvable");
     }
 
+    // Vérifier que le professeur a les droits
+    Authentication authentication =
+      SecurityContextHolder.getContext().getAuthentication();
+    String username = authentication.getName();
+
+    // Récupérer le teacher lié à cet utilisateur
+    Optional<User> user = userService.findByUsername(username);
+    Optional<Teacher> teacher = teacherService.findByUserId(user.get().getId());
+
+    // Vérifier que le teacher est bien celui du cours
+    if (teacher.isPresent()) {
+      if (
+        course.get().getTeacher() == null ||
+        !course.get().getTeacher().getId().equals(teacher.get().getId())
+      ) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+          "Vous n'avez pas les droits sur ce cours"
+        );
+      }
+    }
     // Mettre à jour la note
     Grade grade = new Grade(request.getScore(), student.get(), course.get());
     grade.setId(id);
@@ -121,6 +155,7 @@ public class GradeController {
     private double score;
     private Long studentId;
     private Long courseId;
+    private Long teacherId;
 
     public double getScore() {
       return score;
@@ -144,6 +179,14 @@ public class GradeController {
 
     public void setCourseId(Long courseId) {
       this.courseId = courseId;
+    }
+
+    public Long getTeacherId() {
+      return teacherId;
+    }
+
+    public void setTeacherId(Long teacherId) {
+      this.teacherId = teacherId;
     }
   }
 }
