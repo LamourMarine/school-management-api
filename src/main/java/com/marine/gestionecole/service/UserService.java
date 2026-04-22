@@ -1,5 +1,6 @@
 package com.marine.gestionecole.service;
 
+import com.marine.gestionecole.dto.UserResponse;
 import com.marine.gestionecole.entity.User;
 import com.marine.gestionecole.entity.User.Role;
 import com.marine.gestionecole.repository.UserRepository;
@@ -59,27 +60,53 @@ public class UserService implements UserDetailsService {
     return userRepository.save(user);
   }
 
-  public Optional<User> findById(Long id) {
-    return userRepository.findById(id);
+  public Optional<UserResponse> findById(Long id) {
+    return userRepository
+      .findById(id)
+      .map(user ->
+        new UserResponse(
+          user.getId(),
+          user.getUsername(),
+          user.getEmail(),
+          user.getRole().name()
+        )
+      );
   }
 
   public Optional<User> findByUsername(String username) {
     return userRepository.findByUsername(username);
   }
 
-  public List<User> findAll() {
-    return userRepository.findAll();
+  public List<UserResponse> findAll() {
+    return userRepository
+      .findAll()
+      .stream()
+      .map(user ->
+        new UserResponse(
+          user.getId(),
+          user.getUsername(),
+          user.getEmail(),
+          user.getRole().name()
+        )
+      )
+      .toList();
   }
 
   public void deleteById(Long id) {
     userRepository.deleteById(id);
   }
 
-  public User updateRole(Long id, Role role) {
+  public UserResponse updateRole(Long id, Role role) {
     User user = userRepository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("User not found"));
     user.setRole(role);
-    return userRepository.save(user);
+    User saved = userRepository.save(user);
+    return new UserResponse(
+      saved.getId(),
+      saved.getUsername(),
+      saved.getEmail(),
+      saved.getRole().name()
+    );
   }
 }
