@@ -1,6 +1,7 @@
 package com.marine.gestionecole.service;
 
 import com.marine.gestionecole.entity.User;
+import com.marine.gestionecole.entity.User.Role;
 import com.marine.gestionecole.repository.UserRepository;
 import java.util.Collections;
 import java.util.List;
@@ -58,11 +59,27 @@ public class UserService implements UserDetailsService {
     return userRepository.save(user);
   }
 
+  public Optional<User> findById(Long id) {
+    return userRepository.findById(id);
+  }
+
   public Optional<User> findByUsername(String username) {
     return userRepository.findByUsername(username);
   }
 
   public List<User> findAll() {
     return userRepository.findAll();
+  }
+
+  public void deleteById(Long id) {
+    userRepository.deleteById(id);
+  }
+
+  public User updateRole(Long id, Role role) {
+    User user = userRepository
+      .findById(id)
+      .orElseThrow(() -> new RuntimeException("User not found"));
+    user.setRole(role);
+    return userRepository.save(user);
   }
 }
