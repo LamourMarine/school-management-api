@@ -30,6 +30,7 @@ public class User {
     
     public enum Role {
         USER,
+        TEACHER,
         ADMIN
     }
 }
