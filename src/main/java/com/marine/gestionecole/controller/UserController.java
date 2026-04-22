@@ -1,5 +1,6 @@
 package com.marine.gestionecole.controller;
 
+import com.marine.gestionecole.dto.UserResponse;
 import com.marine.gestionecole.entity.User;
 import com.marine.gestionecole.entity.User.Role;
 import com.marine.gestionecole.service.UserService;
@@ -20,25 +21,25 @@ public class UserController {
   }
 
   @GetMapping
-  public List<User> getAllUsers() {
+  public List<UserResponse> getAllUsers() {
     return userService.findAll();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<User> getUserById(@PathVariable Long id) {
-    Optional<User> user = userService.findById(id);
-    return user
-      .map(ResponseEntity::ok)
-      .orElse(ResponseEntity.notFound().build());
+  public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+      Optional<UserResponse> user = userService.findById(id);
+      return user
+          .map(ResponseEntity::ok)
+          .orElse(ResponseEntity.notFound().build());
   }
 
   @PutMapping("/{id}/role")
-  public ResponseEntity<User> updateUserRole(
+  public ResponseEntity<UserResponse> updateUserRole(
     @PathVariable Long id,
     @RequestBody Map<String, String> body
   ) {
     Role role = Role.valueOf(body.get("role"));
-    User updated = userService.updateRole(id, role);
+    UserResponse updated = userService.updateRole(id, role);
     return ResponseEntity.ok(updated);
   }
 
