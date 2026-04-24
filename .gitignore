@@ -36,5 +36,6 @@ logs.txt
 logs.txt
 *.log
 
+application.properties
 application-prod.properties
 

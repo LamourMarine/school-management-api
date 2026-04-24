@@ -74,7 +74,7 @@ public class AuthenticationServiceTest {
   @Test
   void register_shouldReturnAuthResponse_whenUserIsValid() {
     // Arrange
-    when(userService.registerUser(any(), any(), any())).thenReturn(mockUser);
+    when(userService.registerUser(any(), any(), any(), any())).thenReturn(mockUser);
     when(userService.loadUserByUsername(any())).thenReturn(mockUserDetails);
     when(jwtService.generateToken(any())).thenReturn("fake-access-token");
     when(refreshTokenService.createRefreshToken(any())).thenReturn(
@@ -92,7 +92,7 @@ public class AuthenticationServiceTest {
   @Test
   void register_shouldThrowException_whenUsernameAlreadyExist() {
     // Arrange
-    when(userService.registerUser(any(), any(), any())).thenThrow(
+    when(userService.registerUser(any(), any(), any(), any())).thenThrow(
       new RuntimeException("Username already exists")
     );
 
