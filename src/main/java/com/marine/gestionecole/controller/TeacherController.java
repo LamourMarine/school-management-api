@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
+import com.marine.gestionecole.dto.CreateTeacherRequest;
 import com.marine.gestionecole.entity.Course;
 import com.marine.gestionecole.entity.Teacher;
 import com.marine.gestionecole.service.CourseService;
@@ -48,14 +49,21 @@ public class TeacherController {
     }
 
 
-    // POST /api/teacher - Créer un professeur
+    // POST /api/teachers - Créer un professeur
     @PostMapping 
     public ResponseEntity<Teacher> createTeacher(@RequestBody Teacher teacher) {
         Teacher saved = teacherService.save(teacher);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    // PUT /api/teacher/{id} - Modifier un professeur
+    // POST /api/teachers/register - Créer le compte du professeur 
+    @PostMapping ("/register")
+    public ResponseEntity<Teacher> createTeacherWithAccount(@RequestBody CreateTeacherRequest request) {
+        Teacher account = teacherService.createTeacherWithAccount(request.getUsername(), request.getEmail(), request.getFirstName(), request.getLastName());
+        return ResponseEntity.status(HttpStatus.CREATED).body(account);
+    }
+
+    // PUT /api/teachers/{id} - Modifier un professeur
     @PutMapping("/{id}")
     public ResponseEntity<Teacher> updateTeacher(@PathVariable Long id, @RequestBody Teacher teacher) {
         if (!teacherService.findById(id).isPresent()) {

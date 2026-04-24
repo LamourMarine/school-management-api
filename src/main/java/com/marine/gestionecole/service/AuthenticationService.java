@@ -39,7 +39,8 @@ public class AuthenticationService {
     User user = userService.registerUser(
       request.getUsername(),
       request.getPassword(),
-      request.getEmail()
+      request.getEmail(),
+      request.getRole()
     );
 
     UserDetails userDetails = userService.loadUserByUsername(

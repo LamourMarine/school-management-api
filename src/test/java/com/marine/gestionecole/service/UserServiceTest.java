@@ -82,7 +82,8 @@ public class UserServiceTest {
     User result = userService.registerUser(
       "testuser",
       "encodedPassword",
-      "test@test.com"
+      "test@test.com",
+      User.Role.USER
     );
 
     // Assert
@@ -99,7 +100,7 @@ public class UserServiceTest {
 
     // Assert
     assertThrows(RuntimeException.class, () -> {
-      userService.registerUser("testuser", "encodedPassword", "test@test.com");
+      userService.registerUser("testuser", "encodedPassword", "test@test.com", User.Role.USER);
     });
   }
 
@@ -110,7 +111,7 @@ public class UserServiceTest {
 
     // Assert
     assertThrows(RuntimeException.class, () -> {
-      userService.registerUser("testuser", "encodedPassword", "test@test.com");
+      userService.registerUser("testuser", "encodedPassword", "test@test.com", User.Role.USER);
     });
   }
 
