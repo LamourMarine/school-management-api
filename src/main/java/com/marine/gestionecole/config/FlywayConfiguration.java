@@ -1,23 +1,23 @@
-package com.marine.gestionecole.config;
+// package com.marine.gestionecole.config;
 
-import org.flywaydb.core.Flyway;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+// import org.flywaydb.core.Flyway;
+// import org.springframework.context.annotation.Configuration;
+// import org.springframework.context.annotation.Profile;
 
-import javax.sql.DataSource;
+// import javax.sql.DataSource;
 
-@Configuration
-@Profile("!test")
-public class FlywayConfiguration {
+// @Configuration
+// @Profile("!test")
+// public class FlywayConfiguration {
 
-    public FlywayConfiguration(DataSource dataSource) {
-        Flyway flyway = Flyway.configure()
-            .baselineOnMigrate(true)
-            .baselineVersion("0")
-            .locations("classpath:db/migration")
-            .dataSource(dataSource)
-            .load();
+//     public FlywayConfiguration(DataSource dataSource) {
+//         Flyway flyway = Flyway.configure()
+//             .baselineOnMigrate(true)
+//             .baselineVersion("0")
+//             .locations("classpath:db/migration")
+//             .dataSource(dataSource)
+//             .load();
         
-        flyway.migrate();
-    }
-}
+//         flyway.migrate();
+//     }
+// }
