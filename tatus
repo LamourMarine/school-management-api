@@ -1,0 +1,91 @@
+[33mab7faed[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m fix: remove manual flyway configuration to avoid double migration
+[33me6a9f2f[m fix: allow null default for teachers firstname lastname migration
+[33m3dbedf5[m Merge pull request #30 from LamourMarine/fix/test-mail-config
+[33mabf14c6[m[33m ([m[1;31morigin/fix/test-mail-config[m[33m, [m[1;32mfix/test-mail-config[m[33m)[m chore: run CI on pull requests
+[33m4ad57c6[m Merge pull request #29 from LamourMarine/fix/test-mail-config
+[33mbcaa15a[m fix: add mail config for test profile
+[33m002843e[m Merge pull request #28 from LamourMarine/feature/teacher-registration-backend
+[33m2cea8bc[m[33m ([m[1;31morigin/feature/teacher-registration-backend[m[33m, [m[1;32mfeature/teacher-registration-backend[m[33m)[m chore: fix gitignore path for application.properties
+[33m3c6584e[m chore: remove application.properties from tracking
+[33m356d081[m feat: add teacher account creation with email notification
+[33md33c1d0[m fix: mock authentication in GradeControllerTest
+[33md691593[m Merge pull request #25 from LamourMarine/feature/user-controller-dto
+[33m7c2e90c[m[33m ([m[1;31morigin/feature/user-controller-dto[m[33m, [m[1;32mfeature/user-controller-dto[m[33m)[m feat: add UserController and UserResponse DTO
+[33mf9cbf6f[m Merge pull request #24 from LamourMarine/feature/teacher-grade-security
+[33m190abf9[m[33m ([m[1;31morigin/feature/teacher-grade-security[m[33m, [m[1;32mfeature/teacher-grade-security[m[33m)[m feat: add teacher authorization check on grade update
+[33m80a7ee2[m Merge pull request #23 from LamourMarine/feature/update-user-role
+[33m6ec7da8[m[33m ([m[1;31morigin/feature/update-user-role[m[33m, [m[1;32mfeature/update-user-role[m[33m)[m feat: add UserController with role management endpoint
+[33m7c2595e[m Merge pull request #22 from LamourMarine/feature/security-roles
+[33m85a42ef[m[33m ([m[1;31morigin/feature/security-roles[m[33m)[m feat: update security config to add TEACHER role
+[33m354d8e3[m Merge pull request #21 from LamourMarine/feature/add-teacher
+[33mb6c013e[m[33m ([m[1;31morigin/feature/add-teacher[m[33m)[m refactor: set FetchType.EAGER on Teacher user relation
+[33m77615e0[m Merge pull request #20 from LamourMarine/feature/add-teacher
+[33m7ec804a[m feat : add TEACHER role to users constraint
+[33m14c9c8a[m Merge pull request #19 from LamourMarine/feature/add-teacher
+[33m5162c80[m feat: add Teacher service, repository and controller
+[33m4fcbf35[m Merge pull request #18 from LamourMarine/feature/add-teacher
+[33m20227d4[m feat: add Teacher service, repository and controller
+[33m0b8a554[m Merge pull request #17 from LamourMarine/feature/add-teacher
+[33mbaef8a6[m feat: add Teacher entity and migration
+[33m46c5935[m Merge pull request #16 from LamourMarine/feature/add-teacher
+[33m13a0d54[m feat: add Teacher entity and migration
+[33m24f052c[m refactor: add @Transactional on service methods and fix import
+[33me74b844[m Merge pull request #15 from LamourMarine/refactor/constructor-injection
+[33m33a05c6[m[33m ([m[1;31morigin/refactor/constructor-injection[m[33m)[m refactor: replace @Autowired with constructor injection
+[33md6a6643[m add: accessDenied
+[33mbeb7d74[m Merge pull request #14 from LamourMarine/feature/cleanup-refresh-tokens
+[33mae66029[m[33m ([m[1;31morigin/feature/cleanup-refresh-tokens[m[33m, [m[1;32mfeature/cleanup-refresh-tokens[m[33m)[m chore: remove test migration files
+[33md153321[m Merge pull request #13 from LamourMarine/feature/cleanup-refresh-tokens
+[33ma470038[m feat: add scheduled cleanup of revoked refresh tokens
+[33m65f0008[m fix: add missing GradeRepository mock in StudentServiceTest
+[33m33cf5e1[m Merge pull request #12 from LamourMarine/test/student-controller-tests
+[33m9f688bc[m[33m ([m[1;31morigin/test/student-controller-tests[m[33m, [m[1;32mtest/student-controller-tests[m[33m)[m refactor: rename getNotesCourse to getCourseGrades
+[33m3a795f9[m test: add GradeController and CourseController tests with MockMvc
+[33m74a43ca[m test: add StudentController tests with MockMvc
+[33m70fc95d[m test: add StudentController tests with MockMvc
+[33m2c9cf00[m Merge pull request #11 from LamourMarine/feat/admin-role-management
+[33m228e721[m[33m ([m[1;31morigin/feat/admin-role-management[m[33m, [m[1;32mfeat/admin-role-management[m[33m)[m test: update StudentService tests and add conception diagrams
+[33m96b1b2e[m feat: role-based access control and student/grade services
+[33ma79dea0[m feat: update entities and add StudentResponse DTO
+[33m1c07f22[m Merge pull request #10 from LamourMarine/feat/admin-role-management
+[33madf5fad[m .
+[33m05cf07b[m Merge pull request #9 from LamourMarine/feat/role-based-access-control
+[33macb3ab1[m[33m ([m[1;31morigin/feat/role-based-access-control[m[33m, [m[1;32mfeat/role-based-access-control[m[33m)[m feat: add role-based access control
+[33m18ee266[m chore: add test data migration
+[33me2a431c[m chore: rename course table to courses
+[33m194db5b[m Merge pull request #8 from LamourMarine/chore/ci-cd-pipeline
+[33mbc0eedc[m[33m ([m[1;31morigin/chore/ci-cd-pipeline[m[33m, [m[1;32mchore/ci-cd-pipeline[m[33m)[m chore: add unit tests and CI/CD pipeline
+[33mc22beb5[m Merge pull request #7 from LamourMarine/chore/env-profiles
+[33m9b94b49[m[33m ([m[1;31morigin/chore/env-profiles[m[33m, [m[1;32mchore/env-profiles[m[33m)[m chore: add dev/prod Spring Boot profiles
+[33m04a0a0a[m chore: add dev/prod Spring Boot profiles
+[33m8a9e9bb[m Fix: Add Partitioned attribute to cookies for Chrome compatibility
+[33meb83271[m Fix: Set SameSite=None and Secure=true for cross-site cookies
+[33m4f68e65[m Fix: Set SameSite=None and Secure=true for cross-site cookies
+[33m676420c[m Merge pull request #6 from LamourMarine/refactor/auth-separation-of-concerns
+[33m2f380e0[m[33m ([m[1;31morigin/refactor/auth-separation-of-concerns[m[33m, [m[1;32mrefactor/auth-separation-of-concerns[m[33m)[m Refactor AuthController + create AuthenticationService and CookieService
+[33m0b47d15[m Merge pull request #5 from LamourMarine/feature/flyway-migrations
+[33mbc3c385[m[33m ([m[1;31morigin/feature/flyway-migrations[m[33m, [m[1;32mfeature/flyway-migrations[m[33m)[m feat: migrate refresh token to httpOnly cookie for enhanced security
+[33m035c9fc[m feat: JWT refresh token system with localStorage
+[33m4d4aa1a[m Update README.md
+[33mbec384f[m Update README.md
+[33mdac84c7[m Update README.md
+[33mfda579f[m Update README.md
+[33maaa8bdc[m[33m ([m[1;32mfeature/flyway-refresh-tokens[m[33m)[m feat: add health check endpoint
+[33m117289c[m feat: add health check endpoint
+[33m4ff2798[m feat: add health check endpoint
+[33mcb27f94[m feat: add health check endpoint
+[33me912996[m feat: add health check endpoint
+[33mb3fe02b[m feat: add health check endpoint
+[33md510666[m chore: Clean up unused files and fix warnings
+[33m6370263[m fix: Remove duplicate CORS config and add production frontend URL
+[33me108722[m fix: Use environment variables for database config
+[33mac052e2[m fix: Use environment variables for database config
+[33mf0992a8[m fix: Use environment variables for database config
+[33m4f0f744[m chore: Add Dockerfile for Render deployment
+[33m6588cc7[m Merge pull request #4 from LamourMarine/fix/jwt-security-circular-dependency
+[33mddae49f[m[33m ([m[1;31morigin/fix/jwt-security-circular-dependency[m[33m)[m fix: Enable JWT authentication and resolve circular dependency
+[33m84301e3[m Merge pull request #3 from LamourMarine/feature/spring-security-jwt
+[33m66d63c8[m[33m ([m[1;31morigin/feature/spring-security-jwt[m[33m)[m feat: Add Spring Security with JWT authentication
+[33m2d1d057[m Merge pull request #2 from LamourMarine/feature/backend-tests
+[33m4eaedf5[m[33m ([m[1;31morigin/feature/backend-tests[m[33m)[m test: Add unit tests for Services
+[33mf01d1b9[m Merge pull request #1 from LamourMarine/feature/student-re
