@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,20 +21,16 @@ public class TeacherService {
   final PasswordEncoder passwordEncoder;
   final UserRepository userRepository;
   final UserService userService;
-  final EmailService emailService;
-
   TeacherService(
     TeacherRepository teacherRepository,
     PasswordEncoder passwordEncoder,
     UserRepository userRepository,
-    UserService userService,
-    EmailService emailService
+    UserService userService
   ) {
     this.teacherRepository = teacherRepository;
     this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
     this.userService = userService;
-    this.emailService = emailService;
   }
 
   public Optional<Teacher> findByUserId(Long userId) {
@@ -76,7 +71,6 @@ public class TeacherService {
     createTeacher.setUser(newTeacher);
     createTeacher.setFirstName(firstName);
     createTeacher.setLastName(laStName);
-    emailService.sendCredentials(email, username, rawPassword);
 
     return teacherRepository.save(createTeacher);
   }
